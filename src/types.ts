@@ -20,6 +20,16 @@ export class InsufficientLiquidityError extends Error {
 }
 
 /**
+ * Indicates that the trader's wallet balance is insufficient to cover the costs of all orders.
+ */
+export class InsufficientWalletForOrdersError extends Error {
+  constructor(message: string) {
+    super(message)
+    this.name = 'InsufficientWalletForOrdersError'
+  }
+}
+
+/**
  * Indicates that calling convention error or bugs happened.
  */
 export class BugError extends Error {

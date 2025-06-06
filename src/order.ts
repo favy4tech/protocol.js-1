@@ -1,5 +1,5 @@
 import { computeAccount } from './computation'
-import { InvalidArgumentError, AccountStorage, LiquidityPoolStorage, Order, OrderContext } from './types'
+import { InvalidArgumentError, AccountStorage, LiquidityPoolStorage, Order, OrderContext, InsufficientWalletForOrdersError } from './types'
 import { _0, _1, _2 } from './constants'
 import { splitAmount } from './utils'
 import BigNumber from 'bignumber.js'
@@ -154,7 +154,7 @@ export function orderSideAvailable(
       if (afterMargin.lt(_0)) {
         // bankrupt when close. pretend all orders as open orders
         remainPosition = _0
-        remainMargin = _0 // TODO:
+        remainMargin = afterMargin // Account is bankrupt; carry the negative margin forward.
         remainOrders.push(order)
 
         // // bankrupt
@@ -218,8 +218,9 @@ export function orderSideAvailable(
     )
     remainMargin = remainMargin.plus(cost)
     remainWalletBalance = remainWalletBalance.minus(cost)
-    // TODO:
-    // if remainWalletBalance < 0, the relayer should cancel some part of the order
+    if (remainWalletBalance.lt(_0)) {
+      throw new InsufficientWalletForOrdersError(`Insufficient wallet balance to cover order costs. Wallet balance would be ${remainWalletBalance.toFixed()}. Order processing stopped.`);
+    }
   }
 
   return { remainPosition, remainMargin, remainWalletBalance }
