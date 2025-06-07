@@ -1,0 +1,18 @@
+import BigNumber from 'bignumber.js';
+import { ethers } from 'ethers';
+import { CallOverrides } from '@ethersproject/contracts';
+import { Provider } from '@ethersproject/providers';
+import { SignerOrProvider } from './types';
+import { IERC20 } from './abi/IERC20';
+import { IERC20Bytes32 } from './abi/IERC20Bytes32';
+export declare function getERC20Contract(erc20Address: string, signerOrProvider: SignerOrProvider): IERC20;
+export declare function getERC20Bytes32Contract(erc20Address: string, signerOrProvider: SignerOrProvider): IERC20Bytes32;
+export declare function erc20Symbol(erc20Contract: IERC20): Promise<string>;
+export declare function erc20Name(erc20Contract: IERC20): Promise<string>;
+export declare function erc20SymbolBytes32(erc20Address: string, provider: Provider): Promise<string>;
+export declare function erc20NameBytes32(erc20Address: string, provider: Provider): Promise<string>;
+export declare function erc20Decimals(erc20Contract: IERC20): Promise<number>;
+export declare function allowance(erc20Contract: IERC20, accountAddress: string, perpetualAddress: string, decimals: number): Promise<BigNumber>;
+export declare function approveToken(erc20Contract: IERC20, spenderAddress: string, allowance: BigNumber, decimals: number, overrides?: CallOverrides): Promise<ethers.providers.TransactionResponse>;
+export declare function balanceOf(erc20Contract: IERC20, accountAddress: string, decimals: number): Promise<BigNumber>;
+export declare function totalSupply(erc20Contract: IERC20, decimals: number): Promise<BigNumber>;

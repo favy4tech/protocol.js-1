@@ -1,0 +1,31 @@
+import { BigNumber } from 'bignumber.js';
+import { LiquidityPoolStorage, AMMTradingContext, BigNumberish } from './types';
+export declare function initAMMTradingContext(p: LiquidityPoolStorage, perpetualIndex?: number): AMMTradingContext;
+export declare function initAMMTradingContextEagerEvaluation(context: AMMTradingContext): AMMTradingContext;
+export declare function computeAMMInternalTrade(p: LiquidityPoolStorage, perpetualIndex: number, amount: BigNumber): AMMTradingContext;
+export declare function computeBestAskBidPriceIfSafe(context: AMMTradingContext, beta: BigNumber, isAMMBuy: boolean): BigNumber;
+export declare function computeBestAskBidPriceIfUnsafe(context: AMMTradingContext): BigNumber;
+export declare function computeBestAskBidPrice(p: LiquidityPoolStorage, perpetualIndex: number, isAMMBuy: boolean): BigNumber;
+export declare function computeAMMInternalClose(context: AMMTradingContext, amount: BigNumber): AMMTradingContext;
+export declare function computeAMMInternalOpen(context: AMMTradingContext, amount: BigNumber): AMMTradingContext;
+export declare function computeAMMPoolMargin(context: AMMTradingContext, beta: BigNumber, allowUnsafe?: boolean): AMMTradingContext;
+export declare function isAMMSafe(context: AMMTradingContext, beta: BigNumber): boolean;
+export declare function computeAMMSafeShortPositionAmount(context: AMMTradingContext, beta: BigNumber): BigNumber;
+export declare function computeAMMSafeLongPositionAmount(context: AMMTradingContext, beta: BigNumber): BigNumber;
+export declare function computeAMMSafeCondition1(context: AMMTradingContext, beta: BigNumber): BigNumber;
+export declare function computeAMMSafeCondition2(context: AMMTradingContext, beta: BigNumber): BigNumber | true;
+export declare function computeAMMSafeCondition3(context: AMMTradingContext, beta: BigNumber): BigNumber | false;
+export declare function computeBasePrice(context: AMMTradingContext, beta: BigNumber, position: BigNumber): BigNumber;
+export declare function computeDeltaMargin(context: AMMTradingContext, beta: BigNumber, position2: BigNumber): BigNumber;
+export declare function computeFundingRate(p: LiquidityPoolStorage, perpetualIndex: number): BigNumber;
+export declare function computeAMMShareToMint(p: LiquidityPoolStorage, totalShare: BigNumberish, cashToAdd: BigNumberish): {
+    shareToMint: BigNumber;
+    poolMargin: BigNumber;
+    newPoolMargin: BigNumber;
+};
+export declare function computeAMMCashToReturn(p: LiquidityPoolStorage, totalShare: BigNumberish, shareToRemove: BigNumberish): {
+    cashToReturn: BigNumber;
+    poolMargin: BigNumber;
+    newPoolMargin: BigNumber;
+};
+export declare function computeMaxRemovableShare(p: LiquidityPoolStorage, totalShare: BigNumberish): BigNumber;
